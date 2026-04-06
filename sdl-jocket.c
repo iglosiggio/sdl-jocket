@@ -63,7 +63,7 @@ sdl_jocket_command(const char* command, int len) {
 			printf("[ERROR] Axis command lacks value separator!\n");
 			return;
 		}
-		long value = strtoul(command + 5, NULL, 10) - (1l << 15);
+		unsigned long value = strtoul(command + 5, NULL, 10) - (1l << 15);
 		if (value < -32768 || 32767 < value) {
 			printf("[ERROR] Axis command value (%ld) is outside the expected range!\n", value);
 			return;
