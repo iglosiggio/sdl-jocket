@@ -72,7 +72,7 @@ sdl_jocket_command(const char* command, int len) {
 		if      (memcmp("AXLX", command, 4) == 0) axis = SDL_CONTROLLER_AXIS_LEFTX;
 		else if (memcmp("AXLY", command, 4) == 0) axis = SDL_CONTROLLER_AXIS_LEFTY;
 		else if (memcmp("AXRX", command, 4) == 0) axis = SDL_CONTROLLER_AXIS_RIGHTX;
-		else if (memcmp("AXLY", command, 4) == 0) axis = SDL_CONTROLLER_AXIS_RIGHTY;
+		else if (memcmp("AXRY", command, 4) == 0) axis = SDL_CONTROLLER_AXIS_RIGHTY;
 		else if (memcmp("TRGL", command, 4) == 0) axis = SDL_CONTROLLER_AXIS_TRIGGERLEFT;
 		else if (memcmp("TRGR", command, 4) == 0) axis = SDL_CONTROLLER_AXIS_TRIGGERRIGHT;
 		else {
