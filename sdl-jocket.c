@@ -1,3 +1,4 @@
+#include <dlfcn.h>
 #include <stdio.h>
 
 #include <netinet/in.h>
@@ -144,9 +145,23 @@ cleanup_joystick:
 	return failed != NULL;
 }
 
+bool
+linked_against_sdl() {
+	void* self = dlopen(NULL, RTLD_LAZY);
+	if (!self) return false;
+
+	void* well_known_sdl_symbol = dlsym(self, "SDL_InitSubSystem");
+	dlclose(self);
+
+	return well_known_sdl_symbol != NULL;
+}
+
 [[gnu::constructor]]
 void
 sdl_jocket_init() {
+	if (!linked_against_sdl()) return;
+
+	printf("[INFO] Starting up sdl-jocket...\n");
 	SDL_InitSubSystem(SDL_INIT_JOYSTICK);
 
 	joy_index = SDL_JoystickAttachVirtual(SDL_JOYSTICK_TYPE_GAMECONTROLLER, 6, 15, 0);
@@ -167,5 +182,7 @@ sdl_jocket_init() {
 [[gnu::destructor]]
 void
 sdl_jocket_deinit() {
+	if (!linked_against_sdl()) return;
+
 	SDL_QuitSubSystem(SDL_INIT_JOYSTICK);
 }
